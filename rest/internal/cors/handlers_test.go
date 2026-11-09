@@ -32,6 +32,12 @@ func TestCorsHandlerWithOrigins(t *testing.T) {
 			expect:    "http://local",
 		},
 		{
+			name:      "allow sub origins",
+			origins:   []string{"local", "remote"},
+			reqOrigin: "sub.local",
+			expect:    "sub.local",
+		},
+		{
 			name:      "allow all origins",
 			reqOrigin: "http://local",
 			expect:    "*",
@@ -46,6 +52,11 @@ func TestCorsHandlerWithOrigins(t *testing.T) {
 			name:      "not allow origin",
 			origins:   []string{"http://local", "http://remote"},
 			reqOrigin: "http://another",
+		},
+		{
+			name:      "not safe origin",
+			origins:   []string{"safe.com"},
+			reqOrigin: "not-safe.com",
 		},
 	}
 
